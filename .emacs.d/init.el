@@ -5,13 +5,14 @@
 (tooltip-mode -1)    ; rimuove i tooltips
 (set-fringe-mode 10) ; da un po' piu di aria di 
 
-;; (menu bar mode -1) toglie la barra del menu
+(menu-bar-mode -1)   ; toglie la barra del menu
 
 (setq visible-bell t); imposta un flash in caso di errori senza che parte la campanella 
 
 (set-face-attribute 'default nil :font "Fira Code" :height 115)
+(setq custom-safe-themes t)
+(load-theme 'doom-material-dark) ; carica un tema 
 
-(load-theme 'wombat) ; carica un tema 
 
 ;; https://melpa.org/ sito in cui vengono caricati i pacchetti
 ;; inizializziamo le risorse dei pacchetti
@@ -61,6 +62,9 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+;; Pacchetto di temi della raccolta doom-themes
+(use-package doom-themes)
+
 ;; Parte per far vedere il # di riga e colonna
 (column-number-mode) ; mostra il numero di colonna (?)
 (global-display-line-numbers-mode t) ; mostra ovunque il numero di riga
@@ -108,3 +112,19 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+
+;; abilita la modalità per i file markdown
+;; (use-package markdown-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
