@@ -207,10 +207,10 @@
   (setq projectile-switch-project-action #'projectile-dired)) ; carica dired per navigare nei files del progetto
 
 ;magit.gc - git porcelain in emacs
-(use-package magit
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-  ;il comando custom indica che lavora sempre sulla stessa finestra senza aprirne un'altra
+;(use-package magit
+; :custom
+;  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+; il comando custom indica che lavora sempre sulla stessa finestra senza aprirne un'altra
 
 ; (use-package evil-magit
 ; :after magit)
