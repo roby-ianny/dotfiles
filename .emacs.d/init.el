@@ -9,7 +9,18 @@
 
 (setq visible-bell t); imposta un flash in caso di errori senza che parte la campanella 
 
-(set-face-attribute 'default nil :font "Fira Code" :height 115)
+;; FONT CONFIGURATION
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 115)
+
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "RobotoMono Nerd Font" :height 115)
+
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Roboto" :height 115 :weight 'regular)
+
+
+
+
 (setq custom-safe-themes t)
 ;; https://melpa.org/ sito in cui vengono caricati i pacchetti
 ;; inizializziamo le risorse dei pacchetti
@@ -17,7 +28,7 @@
 
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
+                         ("org" . "https://orgmode.org/elpa/") ; serve per mantenere org aggiornato
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize) ; inizializza il package system
@@ -145,7 +156,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(forge evil-magit magit projectile hydra general which-key rainbow-delimiters markdown-mode ivy-rich helpful doom-themes doom-modeline counsel command-log-mode all-the-icons)))
+   '(visual-fill-column org-bullets forge evil-magit magit projectile hydra general which-key rainbow-delimiters markdown-mode ivy-rich helpful doom-themes doom-modeline counsel command-log-mode all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -190,7 +201,7 @@
 	  ("k" text-scale-decrease "out")
 	  ("f" nil "finished" :exit t))
 
-;; Video 4
+;; Lezione 4 - Projectile e Magit
 ; Projectile fornisce una serie di utilità per il project management
 
 (use-package projectile
@@ -207,16 +218,72 @@
   (setq projectile-switch-project-action #'projectile-dired)) ; carica dired per navigare nei files del progetto
 
 ;magit.gc - git porcelain in emacs
-;(use-package magit
-; :custom
-;  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(use-package magit
+ :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 ; il comando custom indica che lavora sempre sulla stessa finestra senza aprirne un'altra
 
 ; (use-package evil-magit
 ; :after magit)
 
+;;TODO
 ;; NOTE: Make sure to configure a GitHub token before using this package!
 ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
 ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-;;(use-package forge)
-  
+
+(use-package forge)
+
+;; Lezione 5 - OrgMode basics
+; Org mode fa un botto di cose - markup, agenda, todo, tasks planning etc.
+(defun efs/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2) ; cambia la dimensione del testo in base al tipo (titolo etc.)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Roboto" :weight 'regular :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :hook (org-mode . efs/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾") ;mette la freccina in giù per gli elementi "raggruppati"
+  (setq org-agenda-files
+	'("~/Documenti/OrgFiles/Tasks.org"))
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (efs/org-font-setup))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))) ; mette il "pallini" al posto degli asterischi
+
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
+
+;; Lezione 6 - Org mode per il task management
