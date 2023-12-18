@@ -9,18 +9,26 @@
 
 (setq visible-bell t); imposta un flash in caso di errori senza che parte la campanella 
 
-(set-face-attribute 'default nil :font "Fira Code" :height 115)
+;; FONT CONFIGURATION
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 115)
+
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "RobotoMono Nerd Font" :height 115)
+
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Roboto" :height 115 :weight 'regular)
+
+
+
+
 (setq custom-safe-themes t)
-(load-theme 'doom-material-dark) ; carica un tema 
-
-
-;; https://melpa.org/ sito in cui vengono caricati i pacchetti
+;; https://melpa.org/ sito in cui vengono aricati i pacchetti
 ;; inizializziamo le risorse dei pacchetti
 (require 'package)   ; include tutte le funzionalita del package manager
 
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
+                         ("org" . "https://orgmode.org/elpa/") ; serve per mantenere org aggiornato
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize) ; inizializza il package system
@@ -56,6 +64,9 @@
   )
 (ivy-mode 1)
 
+;; Risolve il probelma delle icone nella modline
+(use-package all-the-icons)
+
 ;; Modeline molto figa che aggiunge un po' di funzioni
 (use-package doom-modeline
   :ensure t
@@ -63,7 +74,8 @@
   :custom ((doom-modeline-height 15)))
 
 ;; Pacchetto di temi della raccolta doom-themes
-(use-package doom-themes)
+(use-package doom-themes
+  :init (load-theme 'doom-material-dark t)) ;; carica il tema in automatico
 
 ;; Parte per far vedere il # di riga e colonna
 (column-number-mode) ; mostra il numero di colonna (?)
@@ -113,18 +125,262 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-;; abilita la modalità per i file markdown
-;; (use-package markdown-mode)
+;; VIDEO III
+
+;; (global-set-key (kbd "C-M-j") 'counsel-switch-buffer) ;; scorciatoia per passare facilmente tra i buffer
+
+; Installiamo il pacchetto "general"
+(use-package general) ; permette di definire più facilmente le scorciatoie
+
+(general-define-key
+ "C-M-j" 'counsel-switch-buffer)
+(general-define-key
+ "C-z" 'undo) ; scorciatoia che permette di annullare con control z
+
+;; esempio di cosa può fare altro general
+; (general-create-definer roby/leader-keys
+;   :keymaps '(normal insert visual emacs)
+;   :prefix "SPC"
+;   :global-prefix "C-SPC")
+
+; (roby/leader-keys
+;  "t" (:ignore t :which-key "toggles")
+;  "tt" (counsel-load-theme :which-key "choocse theme")))
+
+;; evil mode permette di emulare il comportamento "modale" di vi 
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" default)))
+ '(org-agenda-files nil)
+ '(package-selected-packages
+   '(visual-fill-column org-bullets forge evil-magit magit projectile hydra general which-key rainbow-delimiters markdown-mode ivy-rich helpful doom-themes doom-modeline counsel command-log-mode all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; (use-package evil
+;;  :init
+;;  (setq evil-want-integration t)
+;;   (setq evil-want-keybinding nil)
+;;   (setq evil-want-C-u-scroll t)
+	   ; C-u normalmente modifica il comportamento di un comando "potenziandolo"-
+;;   (setq evil-want-C-i-jump nil)
+           ; C-i è un altra scorciatoia che è stata disabilitata
+;;   :config
+;;   (evil-mode 1)
+;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+;;   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+;;   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+;;   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+;;   (evil-set-initial-state 'messages-buffer-mode 'normal)
+;;   (evil-set-initial-state 'dashboard-mode 'normal))
+
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (evil-collection-init))
+
+;; se la package list non è aggiornata bisogna lanciare il comando
+; "list-packages"
+
+					; Hydra e window management
+(use-package hydra)
+
+(defhydra hydra-text-scale (:timeout 4) ; Funzione per scalare il testo "velocemente"
+	  "scale text"
+	  ("j" text-scale-increase "in")
+	  ("k" text-scale-decrease "out")
+	  ("f" nil "finished" :exit t))
+
+;; Lezione 4 - Projectile e Magit
+; Projectile fornisce una serie di utilità per il project management
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy)) ;usa ivy per il sistema di autocompletamento nella ricerca dei files
+  ;custom è utile per quando si utilizzao variabili esterne, è una buona pratica per evitare problemi
+  :bind-keymap
+  ("C-c p" . projectile-command-map) ;tutti i commandi di projectile partono con questa scorciatoia
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/Documenti/GitHub") ;directory dei file git
+    (setq projectile-project-search-path '("~/Documenti/GitHub"))) ;cerca tutto direttamente nella cartella 
+  (setq projectile-switch-project-action #'projectile-dired)) ; carica dired per navigare nei files del progetto
+
+;magit.gc - git porcelain in emacs
+(use-package magit
+ :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+; il comando custom indica che lavora sempre sulla stessa finestra senza aprirne un'altra
+
+; (use-package evil-magit
+; :after magit)
+
+;;TODO
+;; NOTE: Make sure to configure a GitHub token before using this package!
+;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+
+(use-package forge)
+
+;; Lezione 5 - OrgMode basics
+; Org mode fa un botto di cose - markup, agenda, todo, tasks planning etc.
+(defun efs/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2) ; cambia la dimensione del testo in base al tipo (titolo etc.)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Roboto" :weight 'regular :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :hook (org-mode . efs/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾") ;mette la freccina in giù per gli elementi "raggruppati"
+  (setq org-agenda-files
+	'("~/Documenti/OrgFiles/Tasks.org"
+	  "~/Documenti/OrgFiles/Birthdays.org"))
+  
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (efs/org-font-setup))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))) ; mette il "pallini" al posto degli asterischi
+
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
+
+;; Lezione 6 - Org mode per il task management
+; permette di aggiungere delle nuove parole chiavi oltre a TODO e DONE
+(require 'org-habit)
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
+
+
+(setq org-todo-keywords
+    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+
+;; Configure custom agenda views
+  (setq org-agenda-custom-commands
+n   '(("d" "Dashboard"
+     ((agenda "" ((org-deadline-warning-days 7)))
+      (todo "NEXT"
+        ((org-agenda-overriding-header "Next Tasks")))
+      (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+
+    ("n" "Next Tasks"
+     ((todo "NEXT"
+        ((org-agenda-overriding-header "Next Tasks")))))
+
+    ("W" "Work Tasks" tags-todo "+work-email")
+
+    ;; Low-effort next actions
+    ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+     ((org-agenda-overriding-header "Low Effort Tasks")
+      (org-agenda-max-todos 20)
+      (org-agenda-files org-agenda-files)))
+
+    ("w" "Workflow Status"
+     ((todo "WAIT"
+            ((org-agenda-overriding-header "Waiting on External")
+             (org-agenda-files org-agenda-files)))
+      (todo "REVIEW"
+            ((org-agenda-overriding-header "In Review")
+             (org-agenda-files org-agenda-files)))
+      (todo "PLAN"
+            ((org-agenda-overriding-header "In Planning")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
+      (todo "BACKLOG"
+            ((org-agenda-overriding-header "Project Backlog")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
+      (todo "READY"
+            ((org-agenda-overriding-header "Ready for Work")
+             (org-agenda-files org-agenda-files)))
+      (todo "ACTIVE"
+            ((org-agenda-overriding-header "Active Projects")
+             (org-agenda-files org-agenda-files)))
+      (todo "COMPLETED"
+            ((org-agenda-overriding-header "Completed Projects")
+             (org-agenda-files org-agenda-files)))
+      (todo "CANC"
+            ((org-agenda-overriding-header "Cancelled Projects")
+             (org-agenda-files org-agenda-files)))))))
+
+  (setq org-capture-templates ; serve per aggiungere delle cose al volo mentre si fa altro
+    `(("t" "Tasks / Projects")
+      ("tt" "Task" entry (file+olp "~/Documenti/OrgFiles/Tasks.org" "Inbox")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+
+      ("j" "Journal Entries")
+      ("jj" "Journal" entry
+           (file+olp+datetree "~/Documenti/OrgFiles/Journal.org")
+           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+           :clock-in :clock-resume
+           :empty-lines 1)
+      ("jm" "Meeting" entry
+           (file+olp+datetree "~/Documenti/OrgFiles/Journal.org")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :clock-in :clock-resume
+           :empty-lines 1)
+
+      ("w" "Workflows")
+      ("we" "Checking Email" entry (file+olp+datetree "~/Documenti/OrgFiles/Journal.org")
+           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+
+      ("m" "Metrics Capture")
+      ("mw" "Weight" table-line (file+headline "~/Documenti/OrgFiles/Metrics.org" "Weight")
+       "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+
+  (define-key global-map (kbd "C-c j")
+    (lambda () (interactive) (org-capture nil "jj")))
+; Creazione di un archivio in qui finiscono i files
+(setq org-refile-targets
+    '(("Archive.org" :maxlevel . 1)
+      ("Tasks.org" :maxlevel . 1)))
+
+;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
