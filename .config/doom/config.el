@@ -24,6 +24,8 @@
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
+(setq doom-font "RobotoMono Nerd Font-12")
+(setq doom-variable-pitch-font "Roboto-12")
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
@@ -32,7 +34,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-material-dark)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -85,3 +87,23 @@
 ; Drag-and-drop to `dired`
 (add-hook 'dired-mode-hook 'org-download-enable)
 
+; Org variable faces based on hierarchy
+;; Set faces for heading levels
+  ;; (dolist (face '((org-level-1 . 1.2) ; cambia la dimensione del testo in base al tipo (titolo etc.)
+  ;;                 (org-level-2 . 1.1)
+  ;;                 (org-level-3 . 1.05)
+  ;;                 (org-level-4 . 1.0)
+  ;;                 (org-level-5 . 1.1)
+  ;;                 (org-level-6 . 1.1)
+  ;;                 (org-level-7 . 1.1)
+  ;;                 (org-level-8 . 1.1)))
+  ;;   (set-face-attribute (car face) nil :font "Roboto" :weight 'regular :height (cdr face)))
+
+  ;; ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  ;; (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  ;; (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  ;; (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;; (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  ;; (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))

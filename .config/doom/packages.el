@@ -54,3 +54,6 @@
 
 ;;org-download permette di fare copia-incolla delle immagini sui file .org
 (package! org-download)
+
+;;org-bullets per visualissare i pallini al posto degli asterischi
+;;(package! org-bullets)
