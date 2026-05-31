@@ -1,0 +1,25 @@
+packages:
+  common:
+    dnf:
+      - bat # cat with syntax highlighting
+      - nextcloud-client
+      - distrobox.noarch
+      - "@virtualization"
+      - gh
+      - fastfetch
+      - htop
+    flatpak:
+      - com.vscodium.codium
+      - it.mijorus.gearlever
+      - com.github.tchx84.Flatseal
+      - md.obsidian.Obsidian
+      - com.mattjakeman.ExtensionManager
+      - org.wireshark.Wireshark
+      - com.google.AndroidStudio
+      - org.localsend.localsend_app
+      - com.rustdesk.RustDesk
+  desktop:
+    dnf:
+      - syncthing
+    flatpak:
+      - org.telegram.desktop
