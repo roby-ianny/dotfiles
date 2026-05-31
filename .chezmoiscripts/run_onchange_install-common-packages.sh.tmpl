@@ -6,11 +6,6 @@ sudo dnf update -y
 sudo dnf install -y  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-# Install CachyOS kernel 
-sudo dnf copr enable bieszczaders/kernel-cachyos # For GCC built kernels
-sudo dnf install -y kernel-cachyos kernel-cachyos-devel-matched # For GCC built kernels
-sudo setsebool -P domain_kernel_load_modules on # Enable SELinux policy
-
 # Install packages 
 ## https://www.chezmoi.io/user-guide/advanced/install-packages-declaratively/
 ## Common setup
