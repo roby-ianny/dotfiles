@@ -32,7 +32,3 @@ sudo dnf install -y {{ . }}
 {{- if eq .chezmoi.hostname "desktop-old" }}
 sudo dnf install xorg-x11-drv-nvidia-580xx akmod-nvidia-580xx
 {{- end }}
-
-# Setup git
-gh auth login
-gh auth setup-git

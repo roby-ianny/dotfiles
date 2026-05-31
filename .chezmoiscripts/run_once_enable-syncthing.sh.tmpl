@@ -1,0 +1,6 @@
+#!/bin/bash
+{{- if not (eq .chezmoi.hostname "laptop") }}
+# The two commands above are idempotent
+sudo systemctl enable syncthing@{{ .chezmoi.username }}.service
+sudo systemctl enable syncthing@{{ .chezmoi.username }}.service
+{{- end}}
