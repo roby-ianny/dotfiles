@@ -23,3 +23,4 @@ packages:
       - syncthing
     flatpak:
       - org.telegram.desktop
+      - org.mozilla.thunderbird
