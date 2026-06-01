@@ -1,26 +1,28 @@
 packages:
   common:
     dnf:
-      - bat # cat with syntax highlighting
+      - bat           # cat with syntax highlighting
       - nextcloud-client
-      - distrobox.noarch
+      - distrobox
       - "@virtualization"
       - gh
       - fastfetch
       - htop
+      - gnome-tweaks
+      - solaar        # logitech mouse/keyboard setup software
     flatpak:
       - com.vscodium.codium
-      - it.mijorus.gearlever
-      - com.github.tchx84.Flatseal
-      - md.obsidian.Obsidian
-      - com.mattjakeman.ExtensionManager
-      - org.wireshark.Wireshark
+      - it.mijorus.gearlever              # manage appimages
+      - com.github.tchx84.Flatseal        # manage flatpaks
+      - md.obsidian.Obsidian              # second brain
+      - com.mattjakeman.ExtensionManager 
+      - org.wireshark.Wireshark           # for network forensics
       - com.google.AndroidStudio
-      - org.localsend.localsend_app
+      - org.localsend.localsend_app     
       - com.rustdesk.RustDesk
   desktop:
     dnf:
       - syncthing
     flatpak:
-      - org.telegram.desktop
+      - org.telegram.desktops
       - org.mozilla.thunderbird
