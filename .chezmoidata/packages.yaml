@@ -10,6 +10,7 @@ packages:
       - htop
       - gnome-tweaks
       - solaar        # logitech mouse/keyboard setup software
+      - calibre
     flatpak:
       - com.vscodium.codium
       - it.mijorus.gearlever              # manage appimages
@@ -20,9 +21,10 @@ packages:
       - com.google.AndroidStudio
       - org.localsend.localsend_app     
       - com.rustdesk.RustDesk
+      - net.ankiweb.Anki                  # flashcards
+      - eu.scarpetta.PDFMixTool
+      - net.cozic.joplin_desktop
   desktop:
-    dnf:
-      - syncthing
     flatpak:
       - org.telegram.desktops
       - org.mozilla.thunderbird
