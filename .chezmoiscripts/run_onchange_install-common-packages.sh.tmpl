@@ -2,9 +2,6 @@
 # System Update
 sudo dnf update -y
 
-# Enable rpm fusion repositories
-sudo dnf install -y  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf install -y  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Install packages 
 ## https://www.chezmoi.io/user-guide/advanced/install-packages-declaratively/
@@ -31,4 +28,5 @@ sudo dnf install -y {{ . }}
 # Driver installation for specific machines
 {{- if eq .chezmoi.hostname "desktop-old" }}
 sudo dnf install xorg-x11-drv-nvidia-580xx akmod-nvidia-580xx
+sudo dnf install libva-nvidia-driver.{i686,x86_64}
 {{- end }}

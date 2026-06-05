@@ -11,6 +11,8 @@ packages:
       - gnome-tweaks
       - solaar        # logitech mouse/keyboard setup software
       - calibre
+      - fuse
+      - fuse-devel
     flatpak:
       - com.vscodium.codium
       - it.mijorus.gearlever              # manage appimages
@@ -24,7 +26,9 @@ packages:
       - net.ankiweb.Anki                  # flashcards
       - eu.scarpetta.PDFMixTool
       - net.cozic.joplin_desktop
+      - org.videolan.VLC
   desktop:
     flatpak:
       - org.telegram.desktops
       - org.mozilla.thunderbird
+    dnf:
