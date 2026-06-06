@@ -1,0 +1,14 @@
+{
+    "git.autofetch": true,
+    "window.newWindowProfile": "Default",
+    "workbench.colorTheme": "Retina",
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 16,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.mouseWheelZoom": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.minimap.autohide": "scroll",
+    "files.eol": "\n"
+}

@@ -1,0 +1,14 @@
+name: Local Config
+version: 1.0.0
+schema: v1
+models:
+  - name: Autodetect
+    provider: lemonade
+    model: AUTODETECT
+    apiBase: http://localhost:8080/api/v1/
+  - name: Qwen2.5-Coder
+    provider: lemonade
+    model: Qwen2.5-Coder-1.5B-Instruct-GGUF-Q4_K_M
+    apiBase: http://localhost:8080/api/v1/
+    roles:
+      - autocomplete
