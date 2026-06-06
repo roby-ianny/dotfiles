@@ -27,6 +27,6 @@ sudo dnf install -y {{ . }}
 
 # Driver installation for specific machines
 {{- if eq .chezmoi.hostname "desktop-old" }}
-sudo dnf install xorg-x11-drv-nvidia-580xx akmod-nvidia-580xx
-sudo dnf install libva-nvidia-driver.{i686,x86_64}
+sudo dnf install -y xorg-x11-drv-nvidia-580xx akmod-nvidia-580xx
+sudo dnf install -y libva-nvidia-driver.{i686,x86_64}
 {{- end }}

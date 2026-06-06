@@ -11,8 +11,8 @@ packages:
       - gnome-tweaks
       - solaar        # logitech mouse/keyboard setup software
       - calibre
-      - fuse
-      - fuse-devel
+      - fuse          # needed by AppImages      
+      - fuse-devel    # needed by AppImages
     flatpak:
       - com.vscodium.codium
       - it.mijorus.gearlever              # manage appimages
@@ -27,6 +27,7 @@ packages:
       - eu.scarpetta.PDFMixTool
       - net.cozic.joplin_desktop
       - org.videolan.VLC
+      - com.jeffser.Alpaca
   desktop:
     flatpak:
       - org.telegram.desktops
