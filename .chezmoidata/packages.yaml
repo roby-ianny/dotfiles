@@ -27,7 +27,6 @@ packages:
       - eu.scarpetta.PDFMixTool
       - net.cozic.joplin_desktop
       - org.videolan.VLC
-      - com.jeffser.Alpaca
   desktop:
     flatpak:
       - org.telegram.desktops

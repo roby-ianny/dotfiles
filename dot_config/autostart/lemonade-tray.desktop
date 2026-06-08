@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Lemonade System Tray
-Exec=/usr/bin/lemonade-tray -p 8080
+Exec=/usr/bin/lemonade-tray
 AutoStart=true
 X-GNOME-Autostart-enabled=true
