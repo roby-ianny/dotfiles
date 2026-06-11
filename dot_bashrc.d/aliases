@@ -1,2 +1,2 @@
 alias cat='bat'
-alias code='flatpak run com.vscodium.codium'
+alias code='flatpak run com.visualstudio.code'

@@ -14,7 +14,7 @@ packages:
       - fuse          # needed by AppImages      
       - fuse-devel    # needed by AppImages
     flatpak:
-      - com.vscodium.codium
+      - com.visualstudio.code 
       - it.mijorus.gearlever              # manage appimages
       - com.github.tchx84.Flatseal        # manage flatpaks
       - md.obsidian.Obsidian              # second brain
