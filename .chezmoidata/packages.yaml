@@ -1,7 +1,7 @@
 packages:
   common:
     dnf:
-      - bat           # cat with syntax highlighting
+      - bat # cat with syntax highlighting
       - nextcloud-client
       - distrobox
       - "@virtualization"
@@ -9,21 +9,19 @@ packages:
       - fastfetch
       - htop
       - gnome-tweaks
-      - solaar        # logitech mouse/keyboard setup software
-      - calibre
-      - fuse          # needed by AppImages      
-      - fuse-devel    # needed by AppImages
+      - solaar # logitech mouse/keyboard setup software
+      - fuse # needed by AppImages
+      - fuse-devel # needed by AppImages
     flatpak:
-      - com.visualstudio.code 
-      - it.mijorus.gearlever              # manage appimages
-      - com.github.tchx84.Flatseal        # manage flatpaks
-      - md.obsidian.Obsidian              # second brain
-      - com.mattjakeman.ExtensionManager 
-      - org.wireshark.Wireshark           # for network forensics
+      - it.mijorus.gearlever # manage appimages
+      - com.github.tchx84.Flatseal # manage flatpaks
+      - md.obsidian.Obsidian # second brain
+      - com.mattjakeman.ExtensionManager
+      - org.wireshark.Wireshark # for network forensics
       - com.google.AndroidStudio
-      - org.localsend.localsend_app     
+      - org.localsend.localsend_app
       - com.rustdesk.RustDesk
-      - net.ankiweb.Anki                  # flashcards
+      - net.ankiweb.Anki # flashcards
       - eu.scarpetta.PDFMixTool
       - net.cozic.joplin_desktop
       - org.videolan.VLC
@@ -32,3 +30,4 @@ packages:
       - org.telegram.desktops
       - org.mozilla.thunderbird
     dnf:
+      - calibre
