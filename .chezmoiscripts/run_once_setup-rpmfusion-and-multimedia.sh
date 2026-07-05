@@ -7,6 +7,3 @@ sudo dnf install -y  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-no
 # install multimedia packages
 sudo dnf swap ffmpeg-free ffmpeg --allowerasing
 sudo dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-
-# install gaming stuff
-sudo dnf install steam

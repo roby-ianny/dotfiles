@@ -9,9 +9,11 @@ packages:
       - fastfetch
       - htop
       - gnome-tweaks
+      - xclip # needed to paste image vscode extension
       - solaar # logitech mouse/keyboard setup software
       - fuse # needed by AppImages
       - fuse-devel # needed by AppImages
+      - steam
     flatpak:
       - it.mijorus.gearlever # manage appimages
       - com.github.tchx84.Flatseal # manage flatpaks
@@ -29,5 +31,6 @@ packages:
     flatpak:
       - org.telegram.desktops
       - org.mozilla.thunderbird
+      - org.signal.Signal
     dnf:
       - calibre
